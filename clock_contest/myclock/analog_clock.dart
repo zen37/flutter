@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,10 @@ import 'package:flutter/semantics.dart';
 import 'package:intl/intl.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 
-import 'container_hand.dart';
+import './clock.dart';
+import './clock_text.dart';
+
+//import 'container_hand.dart';
 import 'drawn_hand.dart';
 
 /// Total distance traveled by a second or a minute hand, each second or minute,
@@ -102,7 +106,7 @@ class _AnalogClockState extends State<AnalogClock> {
             // Minute hand.
             highlightColor: Colors.grey[700], //zm Color(0xFF8AB4F8),
             // Second hand.
-            accentColor: Color(0xFF669DF6),
+            accentColor: Colors.red, // zm  Color(0xFF669DF6),
             backgroundColor: Colors
                 .grey, //  Image.asset('wood.png').color, //zm Color(0xFFD2E3FC),
           )
@@ -114,6 +118,7 @@ class _AnalogClockState extends State<AnalogClock> {
           );
 
     final time = DateFormat.Hms().format(DateTime.now());
+    /* zm
     final weatherInfo = DefaultTextStyle(
       style: TextStyle(color: customTheme.primaryColor),
       child: Column(
@@ -126,6 +131,7 @@ class _AnalogClockState extends State<AnalogClock> {
         ],
       ),
     );
+    */
 
     return Semantics.fromProperties(
       properties: SemanticsProperties(
@@ -134,8 +140,8 @@ class _AnalogClockState extends State<AnalogClock> {
       ),
       child: Container(
         //zm color: customTheme.backgroundColor,
-        color: Colors.red,
-        padding: const EdgeInsets.all(16.0),
+        //  color: Colors.red,
+        //  padding: const EdgeInsets.all(16.0),
         child: Stack(
           children: [
             // zm
@@ -161,39 +167,92 @@ class _AnalogClockState extends State<AnalogClock> {
               angleRadians: _now.minute * radiansPerTick,
             ),
             // Example of a hand drawn with [Container].
-            ContainerHand(
-              color: Colors.transparent,
+            DrawnHand(
+              color: customTheme.primaryColor,
+              thickness: 5, // zm 16,
               size: 0.5,
               angleRadians: _now.hour * radiansPerHour +
                   (_now.minute / 60) * radiansPerHour,
-              child: Transform.translate(
-                offset: Offset(0.0, -60.0),
-                child: Container(
-                  width: 8, // zm 32,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: customTheme.primaryColor,
-                  ),
-                ),
-              ),
             ),
+        
             Align(
               alignment: AlignmentDirectional.center,
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   return Container(
                     width: constraints.maxHeight,
+                    //color: Colors.green,
                     child: Stack(
                       children: <Widget>[
-                        Align(
-                          alignment: AlignmentDirectional.topCenter,
-                          child: Text('12'),
+
+                                 Clock(
+                circleColor: Colors.blue,
+                clockText: ClockText.arabic,
+            ),
+
+                        Container(
+                width: double.infinity,
+                decoration: new BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,
+              
+                ),
+                        ),
+Padding(
+      padding: const EdgeInsets.all(20),
+      child: AspectRatio(
+        aspectRatio: 1.0,
+        child: Container(
+          width: double.infinity,
+          decoration: new BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.transparent,
+          ),
+        ),
+      ),
+        ),
+
+                        Positioned(
+                          bottom: constraints.maxHeight * 0.9,
+                          left: constraints.maxHeight / 2 * 0.9,
+                          child: Text(
+                            '12',
+                          ),
                         ),
                         PositionedDirectional(
-                          top: constraints.maxHeight/4,
-                          end: constraints.maxHeight/3*2,
-                            child: Text('1'),
+                          start: (constraints.maxHeight / 2) * 1.5,
+                          bottom: 0, // 20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            // child: weatherInfo,
+                          ),
                         ),
+
+                        PositionedDirectional(
+                          //top: constraints.maxHeight * 0.07,
+                          //end: constraints.maxHeight * 0.25,
+                          bottom: constraints.maxHeight * 0.867,
+                          start: constraints.maxHeight * 0.667,
+                          //constraints.maxHeight * 0.75 ,//  / 2,
+                          child: Text(
+                            '1',
+                            //style: TextStyle(
+                            //   fontWeight: FontWeight.bold, fontSize: 30),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: constraints.maxHeight * 0.667,
+                          left: constraints.maxHeight * 0.867,
+                          child: Text(
+                            '2',
+                          ),
+                        ),
+                        PositionedDirectional(
+                          bottom: (1 - cos(30)) * constraints.maxHeight / 2,
+                          start: constraints.maxHeight / 8,
+                          child: Text('7'),
+                        ),
+                        //  print('asdsadsddsa'),
                         Align(
                           alignment: AlignmentDirectional.centerEnd,
                           child: Text('3'),
@@ -206,6 +265,7 @@ class _AnalogClockState extends State<AnalogClock> {
                           alignment: AlignmentDirectional.centerStart,
                           child: Text('9'),
                         ),
+                      
                       ],
                     ),
                   );
@@ -218,7 +278,7 @@ class _AnalogClockState extends State<AnalogClock> {
               bottom: 0,
               child: Padding(
                 padding: const EdgeInsets.all(8),
-               // child: weatherInfo,
+                // child: weatherInfo,
               ),
             ),
             */
