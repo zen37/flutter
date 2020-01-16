@@ -1,26 +1,21 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import './clock_text.dart';
-import './clock_face.dart';
+import 'clock_face.dart';
 
 typedef TimeProducer = DateTime Function();
 
 class Clock extends StatefulWidget {
-
   final Color circleColor;
-  final ClockText clockText;
   final TimeProducer getCurrentTime;
   final Duration updateDuration;
 
-  Clock({
-         this.circleColor = Colors.grey,
-         this.clockText = ClockText.arabic,
-         this.getCurrentTime = getSystemTime,
-         this.updateDuration = const Duration(seconds: 1)
-         });
+  Clock(
+      {this.circleColor = Colors.transparent,
+      this.getCurrentTime = getSystemTime,
+      this.updateDuration = const Duration(seconds: 1)});
 
   static DateTime getSystemTime() {
-    return new DateTime.now();
+    return DateTime.now();
   }
 
   @override
@@ -36,13 +31,13 @@ class _Clock extends State<Clock> {
   @override
   void initState() {
     super.initState();
-    dateTime = new DateTime.now();
-    this._timer = new Timer.periodic(widget.updateDuration, setTime);
+    dateTime = DateTime.now();
+    this._timer = Timer.periodic(widget.updateDuration, setTime);
   }
 
   void setTime(Timer timer) {
     setState(() {
-      dateTime = new DateTime.now();
+      dateTime = DateTime.now();
     });
   }
 
@@ -64,13 +59,10 @@ class _Clock extends State<Clock> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-         shape: BoxShape.circle,
-         // scolor: widget.circleColor,
+        shape: BoxShape.circle,
       ),
-
       child: ClockFace(
-          clockText : widget.clockText,
-          dateTime: dateTime,
+        dateTime: dateTime,
       ),
     );
   }
