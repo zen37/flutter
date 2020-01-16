@@ -1,13 +1,8 @@
 import 'dart:math';
-
-import 'clock_text.dart';
 import 'package:flutter/material.dart';
-
 import 'style.dart';
 
 class ClockDial extends CustomPainter {
-  final clockText;
-
   final hourTickMarkLength = 8.0;
   final minuteTickMarkLength = 5.0;
 
@@ -18,28 +13,13 @@ class ClockDial extends CustomPainter {
   final TextPainter textPainter;
   final TextStyle textStyle;
 
-  final romanNumeralList = [
-    'XII',
-    'I',
-    'II',
-    'III',
-    'IV',
-    'V',
-    'VI',
-    'VII',
-    'VIII',
-    'IX',
-    'X',
-    'XI'
-  ];
-
-  ClockDial({this.clockText = ClockText.roman})
+  ClockDial()
       : tickPaint = Paint(),
         textPainter = TextPainter(
           textAlign: TextAlign.center,
           textDirection: TextDirection.rtl,
         ),
-        textStyle = NumberStyle {}
+        textStyle = NumberStyle;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -59,10 +39,8 @@ class ClockDial extends CustomPainter {
         canvas.save();
         canvas.translate(0.0, -radius + 20.0);
 
-        textPainter.text = new TextSpan(
-          text: this.clockText == ClockText.roman
-              ? '${romanNumeralList[i ~/ 5]}'
-              : '${i == 0 ? 12 : i ~/ 5}',
+        textPainter.text = TextSpan(
+          text: '${i == 0 ? 12 : i ~/ 5}',
           style: textStyle,
         );
 
@@ -72,7 +50,7 @@ class ClockDial extends CustomPainter {
         textPainter.layout();
 
         textPainter.paint(canvas,
-            new Offset(-(textPainter.width / 2), -(textPainter.height / 2)));
+            Offset(-(textPainter.width / 2), -(textPainter.height / 2)));
 
         canvas.restore();
       }
