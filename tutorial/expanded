@@ -1,0 +1,83 @@
+//main.dart
+
+import 'package:flutter/material.dart';
+// import 'app.dart';
+
+main() => runApp(MaterialApp(
+      home: Home(),
+    ));
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('this is the title'),
+        centerTitle: true,
+        backgroundColor: Colors.blue[500],
+      ),
+      body: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.all(30.0),
+              color: Colors.yellow,
+              child: Text('One'),
+            ),
+          ), //Expanded
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.all(30.0),
+              color: Colors.cyan,
+              child: Text('Two'),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+                padding: EdgeInsets.all(30.0),
+                color: Colors.blueAccent,
+                child: Text('Three')),
+          ),
+        ],
+      ),
+
+      /*Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('row'),
+          RaisedButton(
+            onPressed: () {},
+            color: Colors.amber,
+            child: Text('click me'),
+          ),
+          Container(
+              color: Colors.yellow,
+              child: Text('this is a container'),
+              padding: EdgeInsets.all(30)),
+        ],
+      ),
+
+      Padding(padding: EdgeInsets.all(90), child: Text('padding')),
+      Container(
+        // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+        padding: EdgeInsets.fromLTRB(10, 20, 30, 40),
+        margin: EdgeInsets.all(10),
+        color: Colors.cyan,
+        child: Text('layout'),
+      ),
+      */
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('press'),
+        ),
+        backgroundColor: Colors.red[300],
+      ),
+    );
+  }
+}
